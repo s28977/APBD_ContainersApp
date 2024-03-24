@@ -10,11 +10,12 @@ public abstract class AbstractContainer<T> where T : AbstractCargo
     public int MaxPayload { get; }
     public abstract string Type { get; }
     private int _cargoMass;
-    private T _cargo;
+    private T? _cargo;
     public string Serial => $"KON-{Type}{ID}";
 
     public AbstractContainer(int height, int tareWeight, int depth, int maxPayload)
     {
+        _cargoMass = 0;
         ID = s_id++;
         Height = height;
         TareWeight = tareWeight;
@@ -26,6 +27,7 @@ public abstract class AbstractContainer<T> where T : AbstractCargo
     public virtual void Empty()
     {
         _cargoMass = 0;
+        _cargo = null;
     }
 
    public virtual void Load(int mass, T cargo) 
