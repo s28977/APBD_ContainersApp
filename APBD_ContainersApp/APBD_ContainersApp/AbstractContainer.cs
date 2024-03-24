@@ -1,6 +1,6 @@
 ﻿namespace APBD_ContainersApp;
 
-public abstract class AbstractContainer
+public abstract class AbstractContainer<T> where T : AbstractCargo
 {
     private static int s_id = 1;
     public int ID { get;  }
@@ -10,6 +10,7 @@ public abstract class AbstractContainer
     public int MaxPayload { get; }
     public abstract string Type { get; }
     private int _cargoMass;
+    private T _cargo;
     public string Serial => $"KON-{Type}{ID}";
 
     public AbstractContainer(int height, int tareWeight, int depth, int maxPayload)
@@ -22,17 +23,18 @@ public abstract class AbstractContainer
     }
     
     
-    public void Empty()
+    public virtual void Empty()
     {
         _cargoMass = 0;
     }
 
-   public virtual void Load(int mass)
+   public virtual void Load(int mass, T cargo) 
    {
        if (mass > MaxPayload)
        {
            throw new OverfillException($"Cargo mass cannot be greater then maximum payload = {MaxPayload}");
        }
        _cargoMass = mass;
+       _cargo = cargo;
    }
 }
