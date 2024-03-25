@@ -16,21 +16,27 @@ public class GasContainer : AbstractContainer, IHazardNotifier
 
     public override void Empty()
     {
-        CargoMass = (int)(CargoMass * 0.05);
+        var mass = (int)(CargoMass * 0.05);
+        var cargo = Cargo;
+        base.Empty();
+        CargoMass = mass;
+        Cargo = cargo;
+
     }
 
-    public override void Load(int mass, AbstractCargo cargo)
+    public override void Load(AbstractCargo cargo, int mass)
     {
         if (cargo.GetType() != typeof(GasCargo))
         {
             throw new ArgumentException("Gas container can only load gas cargo!");
         }
-        base.Load(mass, cargo);
+        base.Load(cargo, mass);
     }
 
-    public void SendHazardNotification()
+    public void SendHazardNotification(string msg)
     {
         Console.WriteLine($"Hazardous situation detected in gas container {Id}");
+        Console.WriteLine(msg);
     }
 
     public override string ToString()

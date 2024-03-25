@@ -2,8 +2,8 @@
 
 public class RefrigeratedCargo : AbstractCargo
 {
-    public int MinTemperature { get; }
-    public RefrigeratedCargo(string name, int minTemperature) : base(name)
+    public double MinTemperature { get; }
+    public RefrigeratedCargo(string name, double minTemperature) : base(name)
     {
         MinTemperature = minTemperature;
     }

@@ -2,5 +2,5 @@
 
 public interface IHazardNotifier
 {
-    void SendHazardNotification();
+    void SendHazardNotification(string msg);
 }

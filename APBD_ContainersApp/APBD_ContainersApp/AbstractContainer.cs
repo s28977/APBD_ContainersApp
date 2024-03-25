@@ -24,6 +24,8 @@ public abstract class AbstractContainer
         get => _cargo;
         protected set => _cargo = value;
     }
+
+    protected bool IsEmpty { get; set; }
     public string Serial => $"KON-{Type}-{Id}";
 
     public AbstractContainer(int height, int tareWeight, int depth, int maxPayload)
@@ -34,6 +36,7 @@ public abstract class AbstractContainer
         TareWeight = tareWeight;
         Depth = depth;
         MaxPayload = maxPayload;
+        IsEmpty = true;
     }
 
     public AbstractContainer() : this(200, 1000, 500, 10000){}
@@ -43,16 +46,22 @@ public abstract class AbstractContainer
     {
         _cargoMass = 0;
         _cargo = null;
+        Console.WriteLine($"Emptied container {Id}");
+        IsEmpty = true;
     }
 
-   public virtual void Load(int mass, AbstractCargo cargo) 
+   public virtual void Load(AbstractCargo cargo, int mass) 
    {
+       if(!IsEmpty)
+           throw new ArgumentException("Container already has some cargo inside.");
        if (mass > MaxPayload)
        {
-           throw new OverfillException($"Cargo mass cannot be greater then maximum payload = {MaxPayload}");
+           throw new OverfillException($"Cargo mass cannot be greater then maximum payload of the container = {MaxPayload}");
        }
        _cargoMass = mass;
        _cargo = cargo;
+       IsEmpty = false;
+       Console.WriteLine($"Loaded {mass} kg of {cargo.Name} into container {Id}");
    }
 
    public override string ToString()

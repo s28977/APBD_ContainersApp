@@ -3,9 +3,9 @@
 public class RefrigeratedContainer : AbstractContainer
 {
     public override string Type => "R";
-    private int _temperature;
+    private double _temperature;
 
-    public int Temperature
+    public double Temperature
     {
         get => _temperature;
         set
@@ -15,8 +15,8 @@ public class RefrigeratedContainer : AbstractContainer
                 _temperature = value;
             } 
             else {
-                Console.WriteLine("The temperature of the container cannot be lower then the minimal temperature " +
-                                $"required by the cargo = {((RefrigeratedCargo)Cargo).MinTemperature}.");
+                throw new ArgumentException("The temperature of the container cannot be lower then the minimal temperature " +
+                                            $"required by the cargo = {((RefrigeratedCargo)Cargo).MinTemperature} \u00B0C.");
                 
             }
         }
@@ -32,7 +32,7 @@ public class RefrigeratedContainer : AbstractContainer
         _temperature = 20;
     }
 
-    public override void Load(int mass, AbstractCargo cargo)
+    public override void Load(AbstractCargo cargo, int mass)
     {
         if (cargo.GetType() != typeof(RefrigeratedCargo))
         {
@@ -40,14 +40,10 @@ public class RefrigeratedContainer : AbstractContainer
         }
         if (_temperature < ((RefrigeratedCargo)cargo).MinTemperature)
         {
-            Console.WriteLine("The current temperature of the container is lower then the minimal temperature " +
-                              $"required by the cargo = {((RefrigeratedCargo)cargo).MinTemperature}.");
-            Console.WriteLine("Set higher container temperature before loading.");
+            throw new ArgumentException("The current temperature of the container is lower then the minimal temperature " +
+                                        $"required by the cargo = {((RefrigeratedCargo)cargo).MinTemperature} \u00B0C.");
         }
-        else
-        {
-            base.Load(mass, cargo);
-        }
+        base.Load(cargo, mass);
     }
 
     public override string ToString()
