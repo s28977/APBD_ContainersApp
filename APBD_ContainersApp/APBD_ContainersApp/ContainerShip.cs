@@ -23,7 +23,7 @@ public class ContainerShip
 
     public ContainerShip(string name) : this(name, 20, 10, 90){}
 
-    public void Load(int id)
+    public bool Load(int id)
     {
         var container = ContainersRepository.Containers[id];
         if (_weight + container.CargoMass + container.TareWeight > MaxWeight*1000)
@@ -37,8 +37,9 @@ public class ContainerShip
         }
         _containers.Add(container.Id, container);
         Console.WriteLine($"Loaded container {id} on {Name}");
+        return true;
     }
-    public void Load(List<int> ids)
+    public bool Load(List<int> ids)
     {
         var containers = new List<AbstractContainer>();
         foreach (var id in ids)
@@ -64,26 +65,30 @@ public class ContainerShip
         }
 
         Console.WriteLine($"Loaded containers {string.Join(", ", ids)} on {Name}");
+        return true;
     }
 
-    public void Remove(int id)
+    public bool Remove(int id)
     {
-        if (_containers.Remove(id))
-        {
-            Console.WriteLine($"Removed container {id} from {Name}");
-        }
+        if (!_containers.Remove(id))
+            return false;
+        Console.WriteLine($"Removed container {id} from {Name}");
+        return true;
+
     }
 
-    public void Replace(int id1, int id2)
+    public bool Replace(int id1, int id2)
     {
         Remove(id1);
         Load(id2);
+        return true;
     }
 
-    public void Transfer(int id, ContainerShip ship)
+    public bool Transfer(int id, ContainerShip ship)
     {
         Remove(id);
         ship.Load(id);
+        return true;
     }
 
     public override string ToString()
