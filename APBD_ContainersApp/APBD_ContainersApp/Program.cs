@@ -35,21 +35,22 @@ public class Program{
         refrigeratedContainer.Empty();
         
         //Ship tests
+        Console.WriteLine(string.Join("\n", ContainersRepository.Containers));
         var bigShip = new ContainerShip("Big");
         var smallShip = new ContainerShip("Small",20, 1, 5);
         gasContainer.Load(gas, 5000);
-        // smallShip.Load(gasContainer); // Exception is thrown as expected
+        // smallShip.Load(2); // Exception is thrown as expected
         gasContainer.Empty(); 
-        smallShip.Load(gasContainer);
-        // smallShip.Load(liquidContainer); // Exception is thrown as expected
+        smallShip.Load(2);
+        // smallShip.Load(1); // Exception is thrown as expected
         liquidContainer.Load(fuel, 4000);
         refrigeratedContainer.Load(banana, 8000);
-        var containers = new List<AbstractContainer>(){liquidContainer, refrigeratedContainer };
+        var containers = new List<int>(){1, 3};
         bigShip.Load(containers);
         Console.WriteLine(bigShip);
-        bigShip.Remove(refrigeratedContainer);
+        bigShip.Remove(3);
         Console.WriteLine(bigShip);
-        bigShip.Replace(1, refrigeratedContainer);
-        smallShip.Transfer(gasContainer, bigShip);
+        bigShip.Replace(1, 3);
+        smallShip.Transfer(2, bigShip);
     }
 }

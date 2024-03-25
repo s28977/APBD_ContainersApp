@@ -37,6 +37,8 @@ public abstract class AbstractContainer
         Depth = depth;
         MaxPayload = maxPayload;
         IsEmpty = true;
+        
+        ContainersRepository.Containers.Add(Id, this);
     }
 
     public AbstractContainer() : this(200, 1000, 500, 10000){}
@@ -44,10 +46,13 @@ public abstract class AbstractContainer
     
     public virtual void Empty()
     {
-        _cargoMass = 0;
-        _cargo = null;
-        Console.WriteLine($"Emptied container {Id}");
-        IsEmpty = true;
+        if (!IsEmpty)
+        {
+            _cargoMass = 0;
+            _cargo = null;
+            Console.WriteLine($"Emptied container {Id}");
+            IsEmpty = true; 
+        }
     }
 
    public virtual void Load(AbstractCargo cargo, int mass) 

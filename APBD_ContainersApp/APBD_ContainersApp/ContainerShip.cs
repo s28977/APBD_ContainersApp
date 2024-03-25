@@ -23,8 +23,9 @@ public class ContainerShip
 
     public ContainerShip(string name) : this(name, 20, 10, 90){}
 
-    public void Load(AbstractContainer container)
+    public void Load(int id)
     {
+        var container = ContainersRepository.Containers[id];
         if (_weight + container.CargoMass + container.TareWeight > MaxWeight*1000)
         {
             throw new ArgumentException($"Cannot load the container. Weight of the ship would exceed maximum weight = {MaxWeight}.");
@@ -35,10 +36,15 @@ public class ContainerShip
             throw new ArgumentException("Cannot load the container. There is no space left on the ship.");
         }
         _containers.Add(container.Id, container);
-        Console.WriteLine($"Loaded container {container.Id} on {Name}");
+        Console.WriteLine($"Loaded container {id} on {Name}");
     }
-    public void Load(List<AbstractContainer> containers)
+    public void Load(List<int> ids)
     {
+        var containers = new List<AbstractContainer>();
+        foreach (var id in ids)
+        {
+            containers.Add(ContainersRepository.Containers[id]);
+        }
         var containersMass = 0;
         foreach (var container in containers)
         {
@@ -57,32 +63,27 @@ public class ContainerShip
             _containers.Add(container.Id, container);
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
-        foreach (var container in containers)
+        Console.WriteLine($"Loaded containers {string.Join(", ", ids)} on {Name}");
+    }
+
+    public void Remove(int id)
+    {
+        if (_containers.Remove(id))
         {
-            stringBuilder.Append($"{container.Id}, ");
+            Console.WriteLine($"Removed container {id} from {Name}");
         }
-        stringBuilder.Length--;
-        stringBuilder.Length--;
-        Console.WriteLine($"Loaded the containers {stringBuilder} on {Name}");
     }
 
-    public void Remove(AbstractContainer container)
+    public void Replace(int id1, int id2)
     {
-        _containers.Remove(container.Id);
-        Console.WriteLine($"Removed container {container.Id} from {Name}");
+        Remove(id1);
+        Load(id2);
     }
 
-    public void Replace(int id, AbstractContainer container)
+    public void Transfer(int id, ContainerShip ship)
     {
-        Remove(_containers[id]);
-        Load(container);
-    }
-
-    public void Transfer(AbstractContainer container, ContainerShip ship)
-    {
-        Remove(container);
-        ship.Load(container);
+        Remove(id);
+        ship.Load(id);
     }
 
     public override string ToString()
