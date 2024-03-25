@@ -4,7 +4,7 @@ namespace APBD_ContainersApp;
 
 public class ContainerShip
 {
-    private Dictionary<int, AbstractContainer<AbstractCargo>> _containers;
+    private Dictionary<int, AbstractContainer> _containers;
     private int _weight;
     public int MaxSpeed { get; }
     public int MaxContainers { get; }
@@ -15,11 +15,11 @@ public class ContainerShip
         MaxSpeed = maxSpeed;
         MaxContainers = maxContainers;
         MaxWeight = maxWeight;
-        _containers = new Dictionary<int, AbstractContainer<AbstractCargo>>();
+        _containers = new Dictionary<int, AbstractContainer>();
         _weight = 0;
     }
 
-    public bool Load(AbstractContainer<AbstractCargo> container)
+    public bool Load(AbstractContainer container)
     {
         if (_weight + container.CargoMass + container.TareWeight > MaxWeight*1000)
         {
@@ -35,7 +35,7 @@ public class ContainerShip
         _containers.Add(container.Id, container);
         return true;
     }
-    public bool Load(List<AbstractContainer<AbstractCargo>> containers)
+    public bool Load(List<AbstractContainer> containers)
     {
         var containersMass = 0;
         foreach (var container in containers)
@@ -64,7 +64,7 @@ public class ContainerShip
         _containers.Remove(id);
     }
 
-    public void Replace(int id, AbstractContainer<AbstractCargo> container)
+    public void Replace(int id, AbstractContainer container)
     {
         Remove(id);
         Load(container);
@@ -82,14 +82,15 @@ public class ContainerShip
     {
         var stringBuilder = new StringBuilder();
         stringBuilder.Append($"Maximum speed: {MaxSpeed} knots, maximum number of containers: {MaxContainers}," +
-                             $" maximum weight of containers: {MaxWeight}").AppendLine();
+                             $" maximum weight of containers: {MaxWeight} tons")
+            .AppendLine()
+            .Append("Containers on the ship:")
+            .AppendLine();
         foreach (var container in _containers)
         {
             stringBuilder.Append(container.Value).AppendLine();
         }
-        {
-            
-        }
+        
         return stringBuilder.ToString();
     }
 }

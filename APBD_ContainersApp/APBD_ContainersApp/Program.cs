@@ -9,5 +9,6 @@ public class Program{
         var liquidContainer = new LiquidContainer();
         var refrigeratedContainer = new RefrigeratedContainer();
         ship.Load(gasContainer);
+        Console.WriteLine(ship);
     }
 }

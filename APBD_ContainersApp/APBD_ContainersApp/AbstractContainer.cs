@@ -1,7 +1,8 @@
 ﻿namespace APBD_ContainersApp;
 
-public abstract class AbstractContainer<T> where T : AbstractCargo
+public abstract class AbstractContainer
 {
+    private static int _id = 1;
     public int Id { get;  }
     public int Height { get; }
     public int TareWeight { get; }
@@ -16,9 +17,9 @@ public abstract class AbstractContainer<T> where T : AbstractCargo
         protected set => _cargoMass = value; 
     }
 
-    private T? _cargo;
+    private AbstractCargo? _cargo;
 
-    public T? Cargo
+    public AbstractCargo? Cargo
     {
         get => _cargo;
         protected set => _cargo = value;
@@ -28,7 +29,7 @@ public abstract class AbstractContainer<T> where T : AbstractCargo
     public AbstractContainer(int height, int tareWeight, int depth, int maxPayload)
     {
         _cargoMass = 0;
-        Id = IdGenerator.GetNewId();
+        Id = _id++;
         Height = height;
         TareWeight = tareWeight;
         Depth = depth;
@@ -44,7 +45,7 @@ public abstract class AbstractContainer<T> where T : AbstractCargo
         _cargo = null;
     }
 
-   public virtual void Load(int mass, T cargo) 
+   public virtual void Load(int mass, AbstractCargo cargo) 
    {
        if (mass > MaxPayload)
        {
