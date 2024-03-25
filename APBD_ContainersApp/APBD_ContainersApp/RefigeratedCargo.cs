@@ -7,4 +7,9 @@ public class RefrigeratedCargo : AbstractCargo
     {
         MinTemperature = minTemperature;
     }
+
+    public override string ToString()
+    {
+        return base.ToString() + $", minimal temperature: {MinTemperature} \u00B0C";
+    }
 }

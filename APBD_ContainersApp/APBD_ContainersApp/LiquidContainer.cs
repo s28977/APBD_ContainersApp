@@ -5,6 +5,7 @@ public class LiquidContainer : AbstractContainer<LiquidCargo>, IHazardNotifier
     public override string Type => "L";
 
     public LiquidContainer(int height, int tareWeight, int depth, int maxPayload) : base(height, tareWeight, depth, maxPayload) {}
+    public LiquidContainer() {}
 
     public override void Load(int mass, LiquidCargo cargo)
     {
@@ -17,7 +18,7 @@ public class LiquidContainer : AbstractContainer<LiquidCargo>, IHazardNotifier
     
     public void SendHazardNotification()
     {
-        Console.WriteLine($"Hazardous situation detected in liquid container {ID}");
+        Console.WriteLine($"Hazardous situation detected in liquid container {Id}");
     }
 
 }

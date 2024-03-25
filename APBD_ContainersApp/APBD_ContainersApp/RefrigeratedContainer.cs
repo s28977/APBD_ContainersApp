@@ -27,6 +27,11 @@ public class RefrigeratedContainer : AbstractContainer<RefrigeratedCargo>
         _temperature = 20;
     }
 
+    public RefrigeratedContainer()
+    {
+        _temperature = 20;
+    }
+
     public override void Load(int mass, RefrigeratedCargo cargo)
     {
         if (_temperature < cargo.MinTemperature)
@@ -39,5 +44,10 @@ public class RefrigeratedContainer : AbstractContainer<RefrigeratedCargo>
         {
             base.Load(mass, cargo);
         }
+    }
+
+    public override string ToString()
+    {
+        return base.ToString() + $", temperature: {_temperature} \u00B0C";
     }
 }

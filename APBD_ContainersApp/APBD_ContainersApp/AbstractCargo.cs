@@ -8,4 +8,9 @@ public abstract class AbstractCargo
     {
         Name = name;
     }
+
+    public override string ToString()
+    {
+        return $"Name: {Name}";
+    }
 }

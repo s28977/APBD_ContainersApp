@@ -9,6 +9,11 @@ public class GasContainer : AbstractContainer<GasCargo>, IHazardNotifier
         Pressure = 1;
     }
 
+    public GasContainer()
+    {
+        Pressure = 1;
+    }
+
     public override void Empty()
     {
         CargoMass = (int)(CargoMass * 0.05);
@@ -16,6 +21,11 @@ public class GasContainer : AbstractContainer<GasCargo>, IHazardNotifier
 
     public void SendHazardNotification()
     {
-        Console.WriteLine($"Hazardous situation detected in gas container {ID}");
+        Console.WriteLine($"Hazardous situation detected in gas container {Id}");
+    }
+
+    public override string ToString()
+    {
+        return base.ToString() + $", pressure: {Pressure} atm";
     }
 }

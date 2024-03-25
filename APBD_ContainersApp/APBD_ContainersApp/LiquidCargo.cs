@@ -7,4 +7,9 @@ public class LiquidCargo : AbstractCargo
     {
         IsHazardous = isHazardous;
     }
+
+    public override string ToString()
+    {
+        return base.ToString() + $", hazardous: {IsHazardous}";
+    }
 }

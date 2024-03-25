@@ -2,8 +2,7 @@
 
 public abstract class AbstractContainer<T> where T : AbstractCargo
 {
-    private static int s_id = 1;
-    public int ID { get;  }
+    public int Id { get;  }
     public int Height { get; }
     public int TareWeight { get; }
     public int Depth { get; }
@@ -24,17 +23,19 @@ public abstract class AbstractContainer<T> where T : AbstractCargo
         get => _cargo;
         protected set => _cargo = value;
     }
-    public string Serial => $"KON-{Type}{ID}";
+    public string Serial => $"KON-{Type}-{Id}";
 
     public AbstractContainer(int height, int tareWeight, int depth, int maxPayload)
     {
         _cargoMass = 0;
-        ID = s_id++;
+        Id = IdGenerator.GetNewId();
         Height = height;
         TareWeight = tareWeight;
         Depth = depth;
         MaxPayload = maxPayload;
     }
+
+    public AbstractContainer() : this(200, 1000, 500, 10000){}
     
     
     public virtual void Empty()
@@ -51,5 +52,11 @@ public abstract class AbstractContainer<T> where T : AbstractCargo
        }
        _cargoMass = mass;
        _cargo = cargo;
+   }
+
+   public override string ToString()
+   {
+       return $"Serial: {Serial}, height: {Height} cm, depth: {Depth} cm, tare weight: {TareWeight} kg, max payload: {MaxPayload} kg, " +
+              $"cargo: ({_cargo}), cargo mass: {_cargoMass} kg";
    }
 }
