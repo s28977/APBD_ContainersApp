@@ -32,6 +32,11 @@ public class Program{
         // refrigeratedContainer.Load(banana, 5000); // Exception is thrown as expected
         refrigeratedContainer.Load(banana, 5000);
         Console.WriteLine(refrigeratedContainer);
+        
+        //container loading different products tests
+        refrigeratedContainer.Load(banana, 3000);
+        // refrigeratedContainer.Load(banana, 3000); // Exception is thrown as expected
+        // refrigeratedContainer.Load(new RefrigeratedCargo("Apples", 15), 1000); // Exception is thrown as expected
         refrigeratedContainer.Empty();
         
         //Ship tests

@@ -32,18 +32,28 @@ public class RefrigeratedContainer : AbstractContainer
         _temperature = 20;
     }
 
-    public override void Load(AbstractCargo cargo, int mass)
+    public override bool Load(AbstractCargo cargo, int mass)
     {
         if (cargo.GetType() != typeof(RefrigeratedCargo))
         {
             throw new ArgumentException("Refrigerated container can only load refrigerated cargo!");
         }
+        if(!IsEmpty && !cargo.Equals(Cargo))
+            throw new ArgumentException("Container already has some other type of cargo inside.");
         if (_temperature < ((RefrigeratedCargo)cargo).MinTemperature)
         {
             throw new ArgumentException("The current temperature of the container is lower then the minimal temperature " +
                                         $"required by the cargo = {((RefrigeratedCargo)cargo).MinTemperature} \u00B0C.");
         }
-        base.Load(cargo, mass);
+        if (mass + CargoMass > MaxPayload)
+        {
+            throw new OverfillException($"Cargo mass cannot be greater then maximum payload of the container = {MaxPayload}");
+        }
+        CargoMass += mass;
+        Cargo = cargo;
+        IsEmpty = false;
+        Console.WriteLine($"Loaded {mass} kg of {cargo.Name} into container {Id}");
+        return true;
     }
 
     public override string ToString()

@@ -14,23 +14,24 @@ public class GasContainer : AbstractContainer, IHazardNotifier
         Pressure = 1;
     }
 
-    public override void Empty()
+    public override bool Empty()
     {
         var mass = (int)(CargoMass * 0.05);
         var cargo = Cargo;
-        base.Empty();
+        if (!base.Empty()) return false;
         CargoMass = mass;
         Cargo = cargo;
+        return true;
 
     }
 
-    public override void Load(AbstractCargo cargo, int mass)
+    public override bool Load(AbstractCargo cargo, int mass)
     {
         if (cargo.GetType() != typeof(GasCargo))
         {
             throw new ArgumentException("Gas container can only load gas cargo!");
         }
-        base.Load(cargo, mass);
+        return base.Load(cargo, mass);
     }
 
     public void SendHazardNotification(string msg)

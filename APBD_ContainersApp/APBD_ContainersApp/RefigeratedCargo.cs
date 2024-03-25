@@ -8,8 +8,18 @@ public class RefrigeratedCargo : AbstractCargo
         MinTemperature = minTemperature;
     }
 
+    public override bool Equals(object? obj)
+    {
+        if (!base.Equals(obj))
+            return false;
+        var cargo = (RefrigeratedCargo)obj;
+        return MinTemperature == cargo.MinTemperature;
+    }
+
     public override string ToString()
     {
         return base.ToString() + $", minimal temperature: {MinTemperature} \u00B0C";
     }
+    
+    
 }

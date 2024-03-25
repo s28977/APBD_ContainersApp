@@ -13,4 +13,14 @@ public abstract class AbstractCargo
     {
         return $"Name: {Name}";
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj == null)
+            return false;
+        if (obj.GetType() != GetType())
+            return false;
+        var cargo = (AbstractCargo) obj;
+        return Name == cargo.Name;
+    }
 }

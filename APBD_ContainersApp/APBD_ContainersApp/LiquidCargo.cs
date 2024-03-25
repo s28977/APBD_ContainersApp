@@ -8,6 +8,14 @@ public class LiquidCargo : AbstractCargo
         IsHazardous = isHazardous;
     }
 
+    public override bool Equals(object? obj)
+    {
+        if (!base.Equals(obj))
+            return false;
+        var cargo = (LiquidCargo)obj;
+        return cargo.IsHazardous == IsHazardous;
+    }
+
     public override string ToString()
     {
         return base.ToString() + $", hazardous: {IsHazardous}";
