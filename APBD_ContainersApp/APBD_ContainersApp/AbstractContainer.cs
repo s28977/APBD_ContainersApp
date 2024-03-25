@@ -10,7 +10,20 @@ public abstract class AbstractContainer<T> where T : AbstractCargo
     public int MaxPayload { get; }
     public abstract string Type { get; }
     private int _cargoMass;
+
+    public int CargoMass
+    {
+        get => _cargoMass;
+        protected set => _cargoMass = value; 
+    }
+
     private T? _cargo;
+
+    public T? Cargo
+    {
+        get => _cargo;
+        protected set => _cargo = value;
+    }
     public string Serial => $"KON-{Type}{ID}";
 
     public AbstractContainer(int height, int tareWeight, int depth, int maxPayload)
