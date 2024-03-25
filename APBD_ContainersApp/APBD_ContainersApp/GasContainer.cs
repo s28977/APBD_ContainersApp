@@ -16,13 +16,12 @@ public class GasContainer : AbstractContainer, IHazardNotifier
 
     public override bool Empty()
     {
-        var mass = (int)(CargoMass * 0.05);
-        var cargo = Cargo;
-        if (!base.Empty()) return false;
-        CargoMass = mass;
-        Cargo = cargo;
+        if (IsEmpty) 
+            return false;
+        CargoMass = (int)(CargoMass * 0.05);
+        Console.WriteLine($"Emptied container {Id}");
+        IsEmpty = true;
         return true;
-
     }
 
     public override bool Load(AbstractCargo cargo, int mass)
